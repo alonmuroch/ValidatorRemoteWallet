@@ -1,0 +1,29 @@
+syntax = "proto3";
+
+package ethereum.wallet.v1alpha1;
+
+import "google/api/annotations.proto";
+
+option csharp_namespace = "Ethereum.Wallet.v1alpha1";
+option go_package = "wallet/v1alpha1;eth";
+option java_multiple_files = true;
+option java_outer_classname = "RemoteWalletProto";
+option java_package = "org.ethereum.wallet.v1alpha1";
+option php_namespace = "Ethereum\\Wallet\\v1alpha1";
+
+
+// Remote wallet service for Prysm's validator client.
+service RemoteWallet {
+    rpc FetchValidatingKeys (FetchValidatingKeysRequest) returns (FetchValidatingKeysResponse) {
+        option (google.api.http) = {
+            get: "/wallet/v1alpha1/keys/all"
+        };
+    }
+}
+
+message FetchValidatingKeysResponse {
+    repeated bytes public_keys = 1;
+}
+
+message FetchValidatingKeysRequest {
+}
