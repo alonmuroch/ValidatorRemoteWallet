@@ -39,3 +39,10 @@ go_repository(
     commit = "eb1a85ca787f0f5f94ba66f41ee66fdfd4c49b70",
     importpath = "github.com/bazelbuild/buildtools",
 )
+
+go_repository(
+    name = "org_golang_google_grpc",
+    build_file_proto_mode = "disable",
+    commit = "1d89a3c832915b2314551c1d2a506874d62e53f7",  # v1.22.0
+    importpath = "google.golang.org/grpc",
+)
