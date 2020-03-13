@@ -19,6 +19,12 @@ service RemoteWallet {
             get: "/wallet/v1alpha1/keys/all"
         };
     }
+
+    rpc Sign (SignRequest) returns (SignResponse) {
+        option (google.api.http) = {
+            get: "/wallet/v1alpha1/keys/sign"
+        };
+    }
 }
 
 message FetchValidatingKeysResponse {
@@ -26,4 +32,21 @@ message FetchValidatingKeysResponse {
 }
 
 message FetchValidatingKeysRequest {
+}
+
+message SignResponse {
+    bytes sig = 1;
+    SignResponseStatus status = 2;
+}
+
+message SignRequest {
+    bytes public_key = 1;
+    bytes root = 2;
+    string domain = 3;
+}
+
+enum SignResponseStatus {
+    SIGNED = 0;
+    UNKNOWN_PUB_KEY = 1;
+    ALREADY_SIGNED = 2;
 }
