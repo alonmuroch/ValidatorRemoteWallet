@@ -1,14 +1,14 @@
 syntax = "proto3";
 
-package ethereum.wallet.v1alpha1;
+package remotewallet.v1alpha1;
 
 import "google/api/annotations.proto";
 
 option csharp_namespace = "Ethereum.Wallet.v1alpha1";
-option go_package = "wallet/v1alpha1;eth";
+option go_package = "wallet/v1alpha1;remotewallet";
 option java_multiple_files = true;
 option java_outer_classname = "RemoteWalletProto";
-option java_package = "org.ethereum.wallet.v1alpha1";
+option java_package = "github.com.alonmuroch.remoetwallet.v1alpha1";
 option php_namespace = "Ethereum\\Wallet\\v1alpha1";
 
 
