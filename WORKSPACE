@@ -30,7 +30,7 @@ gazelle_dependencies()
 
 go_repository(
     name = "grpc_ecosystem_grpc_gateway",
-    commit = "50c55a9810a974dc5a9e7dd1a5c0d295d525f283",
+    commit = "da7a886035e25b2f274f89b6f3c64bf70a9f6780",
     importpath = "github.com/grpc-ecosystem/grpc-gateway",
 )
 
@@ -46,3 +46,4 @@ go_repository(
     commit = "1d89a3c832915b2314551c1d2a506874d62e53f7",  # v1.22.0
     importpath = "google.golang.org/grpc",
 )
+
