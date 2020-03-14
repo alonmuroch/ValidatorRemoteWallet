@@ -28,22 +28,22 @@ load("@bazel_gazelle//:deps.bzl", "gazelle_dependencies", "go_repository")
 
 gazelle_dependencies()
 
-go_repository(
-    name = "grpc_ecosystem_grpc_gateway",
-    commit = "da7a886035e25b2f274f89b6f3c64bf70a9f6780",
-    importpath = "github.com/grpc-ecosystem/grpc-gateway",
-)
+#go_repository(
+#    name = "grpc_ecosystem_grpc_gateway",
+#    commit = "da7a886035e25b2f274f89b6f3c64bf70a9f6780",
+#    importpath = "github.com/grpc-ecosystem/grpc-gateway",
+#)
+#
+#go_repository(
+#    name = "com_github_bazelbuild_buildtools",
+#    commit = "eb1a85ca787f0f5f94ba66f41ee66fdfd4c49b70",
+#    importpath = "github.com/bazelbuild/buildtools",
+#)
 
 go_repository(
-    name = "com_github_bazelbuild_buildtools",
-    commit = "eb1a85ca787f0f5f94ba66f41ee66fdfd4c49b70",
-    importpath = "github.com/bazelbuild/buildtools",
-)
-
-go_repository(
-    name = "org_golang_google_grpc",
+    name = "golang_google_grpc",
     build_file_proto_mode = "disable",
-    commit = "1d89a3c832915b2314551c1d2a506874d62e53f7",  # v1.22.0
+    commit = "f495f5b15ae7ccda3b38c53a1bfcde4c1a58a2bc",  # v1.27.1
     importpath = "google.golang.org/grpc",
 )
 
