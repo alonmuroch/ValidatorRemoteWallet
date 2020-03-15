@@ -42,7 +42,7 @@ message SignResponse {
 message SignRequest {
     bytes public_key = 1;
     bytes root = 2;
-    string domain = 3;
+    uint64 domain = 3;
 }
 
 enum SignResponseStatus {
