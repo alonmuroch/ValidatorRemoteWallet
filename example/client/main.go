@@ -2,6 +2,7 @@ package main
 
 import (
 	"context"
+	"encoding/hex"
 	pb "github.com/alonmuroch/validatorremotewallet/wallet/v1alpha1"
 	"google.golang.org/grpc"
 	"log"
@@ -30,6 +31,10 @@ func main() {
 	if err != nil {
 		log.Fatalf("could not greet: %v", err)
 	}
-	log.Printf("keys: %s", r.GetPublicKeys())
+
+	for _, key := range r.PublicKeys {
+		log.Printf("key: %s", hex.EncodeToString(key))
+	}
+
 }
 

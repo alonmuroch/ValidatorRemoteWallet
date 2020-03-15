@@ -51,3 +51,9 @@ go_repository(
     commit = "51d6538a90f86fe93ac480b35f37b2be17fef232",
     importpath = "gopkg.in/yaml.v2",
 )
+
+go_repository(
+    name = "com_github_urfave_cli",
+    commit = "e6cf83ec39f6e1158ced1927d4ed14578fda8edb",  # v1.21.0
+    importpath = "github.com/urfave/cli",
+)

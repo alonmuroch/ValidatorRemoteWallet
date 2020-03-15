@@ -1,40 +1,36 @@
 package main
 
 import (
-	"context"
-	pb "github.com/alonmuroch/validatorremotewallet/wallet/v1alpha1"
-	grpc "google.golang.org/grpc"
 	"log"
-	"net"
+	"github.com/urfave/cli"
+	"os"
 )
 
-const (
+var (
 	port = ":50051"
+	keys = [...]string{
+		"959892502eb114ba7ee20b05c45181e0429256f0c6b366a84a64ea7d4c23f4ab338116fea1bd79d3821dfe5fea825db9",
+		"8b1d8ccf22e269a082ab9b9d19cfd162a841a9c0642b383661fa47dee7f0d81c74ea2c8e192538c4e9b60a26250ee4c3",
+	}
 )
-
-// server is used to implement helloworld.GreeterServer.
-type server struct {
-	pb.RemoteWalletServer
-}
-
-// SayHello implements helloworld.GreeterServer
-func (s *server) FetchValidatingKeys(ctx context.Context, in *pb.FetchValidatingKeysRequest) (*pb.FetchValidatingKeysResponse, error) {
-	log.Printf("Received: get pub keys request",)
-	return &pb.FetchValidatingKeysResponse{PublicKeys: [][]byte{[]byte("pub1")}}, nil
-}
 
 func main() {
-	lis, err := net.Listen("tcp", port)
-	if err != nil {
-		log.Fatalf("failed to listen: %v", err)
+	app := &cli.App{
+		Name: "Validator Remove Wallet Server",
+		Usage: "Validator Remove Wallet Server",
+		Action: func(c *cli.Context) error {
+			server := &Server{
+				port: port,
+				keys: keys,
+			}
+			server.start()
+			return nil
+		},
 	}
 
-	s := grpc.NewServer()
-	pb.RegisterRemoteWalletServer(s, &server{})
-
-	log.Printf("Server up on port " + port)
-
-	if err := s.Serve(lis); err != nil {
-		log.Fatalf("failed to serve: %v", err)
+	err := app.Run(os.Args)
+	if err != nil {
+		log.Fatal(err)
 	}
 }
+
