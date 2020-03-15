@@ -1,17 +1,82 @@
-#load("@rules_proto//proto:defs.bzl", "proto_library")
+##############################################################################
+# Common
+##############################################################################
+
+load("@rules_proto//proto:defs.bzl", "proto_library")
+load("@rules_java//java:defs.bzl", "java_proto_library")
+
+##############################################################################
+# Go
+##############################################################################
+# gazelle:ignore
 load("@io_bazel_rules_go//go:def.bzl", "go_library")
-#load("@io_bazel_rules_go//proto:def.bzl", "go_proto_library")
+load("@io_bazel_rules_go//proto:def.bzl", "go_proto_library")
+
+##############################################################################
+# OpenAPI (Swagger) V2
+##############################################################################
+load("@grpc_ecosystem_grpc_gateway//protoc-gen-swagger:defs.bzl", "protoc_gen_swagger")
+
+proto_library(
+    name = "proto",
+    srcs = [
+        "RemoteWallet.proto",
+    ],
+    visibility = ["//visibility:public"],
+    deps = [
+        "@com_google_protobuf//:empty_proto",
+        "@com_google_protobuf//:any_proto",
+        "@com_google_protobuf//:timestamp_proto",
+        "@go_googleapis//google/api:annotations_proto",
+        "@grpc_ecosystem_grpc_gateway//protoc-gen-swagger/options:options_proto",
+    ],
+)
+
+##############################################################################
+# Java
+##############################################################################
+
+java_proto_library(
+    name = "java_proto",
+    deps = [":proto"],
+)
+
+go_proto_library(
+    name = "go_proto",
+    compilers = ["@io_bazel_rules_go//proto:go_grpc"],
+    importpath = "github.com/alonmuroch/validatorremotewallet/wallet/v1alpha1",
+    proto = ":proto",
+    visibility = ["//visibility:public"],
+    deps = [
+        "@go_googleapis//google/api:annotations_go_proto",
+        "@grpc_ecosystem_grpc_gateway//protoc-gen-swagger/options:options_go_proto",
+    ],
+)
 
 go_library(
     name = "go_default_library",
-    srcs = ["RemoteWallet.pb.go"],
+    embed = [":go_proto"],
     importpath = "github.com/alonmuroch/validatorremotewallet/wallet/v1alpha1",
     visibility = ["//visibility:public"],
-    deps = [
-#        "@com_github_golang_protobuf//proto:go_default_library",
-        "@go_googleapis//google/api:annotations_go_proto",
-        "@org_golang_google_grpc//:go_default_library",
-        "@org_golang_google_grpc//codes:go_default_library",
-        "@org_golang_google_grpc//status:go_default_library",
-    ],
 )
+
+protoc_gen_swagger(
+    name = "swagger",
+    json_names_for_fields = True,
+    proto = ":proto",
+    single_output = True,
+    visibility = ["//visibility:public"],
+)
+
+# Genrule for template subsitution.
+# See documentation in //tools/replacer.
+#genrule(
+#    name = "generated_swagger_proto",
+#    srcs = [
+#        "swagger.proto",  # A go template compatibile file.
+#        "swagger_description.md",  # Replacement for description.
+#    ],
+#    outs = ["swagger_generated.proto"],
+#    cmd = "$(location //tools/replacer) $(location swagger.proto) description=$(location swagger_description.md) > $(@)",
+#    tools = ["//tools/replacer"],
+#)

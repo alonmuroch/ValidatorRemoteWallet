@@ -1,8 +1,8 @@
 package main
 
 import (
-	pb "../../wallet/v1alpha1"
 	"context"
+	pb "github.com/alonmuroch/validatorremotewallet/wallet/v1alpha1"
 	"google.golang.org/grpc"
 	"log"
 	"time"

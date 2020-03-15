@@ -1,8 +1,8 @@
 package main
 
 import (
-	pb "github.com/alonmuroch/validatorremotewallet/wallet/v1alpha1"
 	"context"
+	pb "github.com/alonmuroch/validatorremotewallet/wallet/v1alpha1"
 	grpc "google.golang.org/grpc"
 	"log"
 	"net"
@@ -14,7 +14,7 @@ const (
 
 // server is used to implement helloworld.GreeterServer.
 type server struct {
-	pb.UnimplementedRemoteWalletServer
+	pb.RemoteWalletServer
 }
 
 // SayHello implements helloworld.GreeterServer
