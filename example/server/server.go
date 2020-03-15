@@ -4,6 +4,7 @@ import (
 	"context"
 	"encoding/hex"
 	pb "github.com/alonmuroch/validatorremotewallet/wallet/v1alpha1"
+	types "github.com/wealdtech/go-eth2-wallet-types"
 	"google.golang.org/grpc"
 	"log"
 	"net"
@@ -12,9 +13,10 @@ import (
 // server is used to implement helloworld.GreeterServer.
 type Server struct {
 	pb.RemoteWalletServer
-	conn         *grpc.Server
-	port         string
-	keys		[2]string
+	conn         	*grpc.Server
+	port         	string
+	keys			[2]string
+	accountsMap 	map[[48]byte]types.Account
 }
 
 // SayHello implements helloworld.GreeterServer
