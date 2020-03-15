@@ -1,21 +1,23 @@
 workspace(name = "alonmuroch_remotewallet")
 
-##############################################################################
-# Go
-##############################################################################
-
 load("@bazel_tools//tools/build_defs/repo:http.bzl", "http_archive")
 
 http_archive(
     name = "io_bazel_rules_go",
-    urls = ["https://github.com/bazelbuild/rules_go/releases/download/0.18.5/rules_go-0.18.5.tar.gz"],
-    sha256 = "a82a352bffae6bee4e95f68a8d80a70e87f42c4741e6a448bec11998fcc82329",
+    urls = [
+        "https://mirror.bazel.build/github.com/bazelbuild/rules_go/releases/download/v0.22.1/rules_go-v0.22.1.tar.gz",
+        "https://github.com/bazelbuild/rules_go/releases/download/v0.22.1/rules_go-v0.22.1.tar.gz",
+    ],
+    sha256 = "e6a6c016b0663e06fa5fccf1cd8152eab8aa8180c583ec20c872f4f9953a7ac5",
 )
 
 http_archive(
     name = "bazel_gazelle",
-    urls = ["https://github.com/bazelbuild/bazel-gazelle/releases/download/0.17.0/bazel-gazelle-0.17.0.tar.gz"],
-    sha256 = "3c681998538231a2d24d0c07ed5a7658cb72bfb5fd4bf9911157c0e9ac6a2687",
+    urls = [
+        "https://storage.googleapis.com/bazel-mirror/github.com/bazelbuild/bazel-gazelle/releases/download/v0.20.0/bazel-gazelle-v0.20.0.tar.gz",
+        "https://github.com/bazelbuild/bazel-gazelle/releases/download/v0.20.0/bazel-gazelle-v0.20.0.tar.gz",
+    ],
+    sha256 = "d8c45ee70ec39a57e7a05e5027c32b1576cc7f16d9dd37135b0eddde45cf1b10",
 )
 
 load("@io_bazel_rules_go//go:deps.bzl", "go_rules_dependencies", "go_register_toolchains")
@@ -28,22 +30,21 @@ load("@bazel_gazelle//:deps.bzl", "gazelle_dependencies", "go_repository")
 
 gazelle_dependencies()
 
-#go_repository(
-#    name = "grpc_ecosystem_grpc_gateway",
-#    commit = "da7a886035e25b2f274f89b6f3c64bf70a9f6780",
-#    importpath = "github.com/grpc-ecosystem/grpc-gateway",
-#)
-#
-#go_repository(
-#    name = "com_github_bazelbuild_buildtools",
-#    commit = "eb1a85ca787f0f5f94ba66f41ee66fdfd4c49b70",
-#    importpath = "github.com/bazelbuild/buildtools",
-#)
-
-go_repository(
-    name = "golang_google_grpc",
+go_repository( # same as prysm
+    name = "org_golang_google_grpc",
     build_file_proto_mode = "disable",
     commit = "f495f5b15ae7ccda3b38c53a1bfcde4c1a58a2bc",  # v1.27.1
     importpath = "google.golang.org/grpc",
 )
 
+go_repository(
+    name = "org_golang_x_net",
+    commit = "da137c7871d730100384dbcf36e6f8fa493aef5b",
+    importpath = "golang.org/x/net",
+)
+
+#go_repository(
+#    name = "go_googleapis",
+#    commit = "da137c7871d730100384dbcf36e6f8fa493aef5b",
+#    importpath = "google.golang.org/genproto",
+#)

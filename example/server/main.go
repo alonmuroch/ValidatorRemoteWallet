@@ -3,7 +3,7 @@ package main
 import (
 	pb "github.com/alonmuroch/validatorremotewallet/wallet/v1alpha1"
 	"context"
-	"google.golang.org/grpc"
+	grpc "google.golang.org/grpc"
 	"log"
 	"net"
 )
