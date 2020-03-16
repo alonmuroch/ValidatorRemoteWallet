@@ -11,7 +11,9 @@ import (
 	"net"
 )
 
-// server is used to implement helloworld.GreeterServer.
+// TODO
+// 1. create external methods for accessing wallet data, create/ remove accounts and so on
+// 2. create external methods for stats?
 type Server struct {
 	pb.RemoteWalletServer
 	conn         	*grpc.Server
@@ -35,17 +37,9 @@ func (s *Server) FetchValidatingKeys(ctx context.Context, in *pb.FetchValidating
 
 // Sign signs a message for the validator to broadcast.
 func (s *Server) Sign(ctx context.Context, in *pb.SignRequest) (*pb.SignResponse, error) {
-	//account, exists := km.accounts[pubKey]
-	//if !exists {
-	//	return nil, ErrNoSuchKey
-	//}
-	//sig, err := account.Sign(root[:], domain)
-	//if err != nil {
-	//	return nil, err
-	//}
-	//return bls.SignatureFromBytes(sig.Marshal())
-
 	log.Printf("Received: sign reques")
+
+	// TODO - check slashing conditions, if exist return error
 
 	account, exists := s.accountsMap[bytesutil.ToBytes48(in.PublicKey)]
 	if !exists {
