@@ -2,6 +2,7 @@ package main
 
 import (
 	"context"
+	"encoding/hex"
 	"fmt"
 	pb "github.com/alonmuroch/validatorremotewallet/wallet/v1alpha1"
 	"github.com/prysmaticlabs/go-ssz"
@@ -41,7 +42,7 @@ func (s *Server) SignAttestation(ctx context.Context, in *pb.SignAttestationRequ
 	log.Printf("Received: sign att. request")
 
 	// create data to sign
-	root, err := ssz.HashTreeRoot(in)
+	root, err := ssz.HashTreeRoot(in.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -81,6 +82,33 @@ func (s *Server) SignProposal(ctx context.Context, in *pb.SignProposalRequest) (
 
 	// sign
 	sig, err := sign(account, blockRoot, in.Domain)
+	if err != nil {
+		return nil, err
+	}
+
+	return &pb.SignResponse{
+		Sig: sig,
+		Status: pb.SignResponseStatus_SIGNED,
+	}, nil
+}
+
+func (s *Server) SignSlot(ctx context.Context, in *pb.SignSlotRequest) (*pb.SignResponse, error) {
+	log.Printf("Received: sign slot request")
+
+	// create data to sign
+	slotRoot, err := ssz.HashTreeRoot(in.Slot)
+	if err != nil {
+		return nil, err
+	}
+
+	// find account
+	account, exists := s.accountsMap[bytesutil.ToBytes48(in.PublicKey)]
+	if !exists {
+		return nil, fmt.Errorf("account does not exist")
+	}
+
+	// sign
+	sig, err := sign(account, slotRoot, in.Domain)
 	if err != nil {
 		return nil, err
 	}

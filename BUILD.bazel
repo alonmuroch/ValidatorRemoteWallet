@@ -2,3 +2,9 @@ load("@bazel_gazelle//:def.bzl", "gazelle")
 
 # gazelle:prefix github.com/alonmuroch/validatorremotewallet
 gazelle(name = "gazelle")
+
+alias(
+    name = "grpc_proto_compiler",
+    actual = "@io_bazel_rules_go//proto:gogofast_grpc",
+    visibility = ["//visibility:public"],
+)

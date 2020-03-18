@@ -1,4 +1,4 @@
-workspace(name = "alonmuroch_validatorremotewallet")
+workspace(name = "prysm") # important as the ethereumapi bazel patch needs this, otherwise will not build
 
 ##############################################################################
 # Go
@@ -183,6 +183,10 @@ go_repository(
     name = "com_github_prysmaticlabs_ethereumapis",
     commit = "fca4d6f69bedb8615c2fc916d1a68f2692285caa",
     importpath = "github.com/prysmaticlabs/ethereumapis",
+    patch_args = ["-p1"],
+        patches = [
+            "//third_party:com_github_prysmaticlabs_ethereumapis-tags.patch",
+        ],
 )
 
 go_repository(
