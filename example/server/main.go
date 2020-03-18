@@ -108,9 +108,7 @@ func importAccounts(path string) (map[[48]byte]types.Account, error){
 				unlocked := false
 				for _, passphrase := range opts.Passphrases {
 					if err := account.Unlock([]byte(passphrase)); err != nil {
-						//log.WithError(err).Trace("Failed to unlock account with one of the supplied passphrases")
-						//log.Printf(err)
-						// TODO error
+						return nil, fmt.Errorf("Failed to unlock account with one of the supplied passphrases")
 					} else {
 						accountsMap[pubKey] = account
 						unlocked = true
@@ -118,8 +116,7 @@ func importAccounts(path string) (map[[48]byte]types.Account, error){
 					}
 				}
 				if !unlocked {
-					//log.Warn("Failed to unlock account with any supplied passphrase; cannot validate with this key")
-					// TODO error
+					return nil, fmt.Errorf("Failed to unlock account with any supplied passphrase; cannot validate with this key")
 				}
 			}
 		}

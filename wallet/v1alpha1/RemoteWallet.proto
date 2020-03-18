@@ -3,6 +3,8 @@ syntax = "proto3";
 package remotewallet.v1alpha1;
 
 import "google/api/annotations.proto";
+import "eth/v1alpha1/attestation.proto";
+import "eth/v1alpha1/beacon_block.proto";
 
 option csharp_namespace = "Ethereum.Wallet.v1alpha1";
 option go_package = "wallet/v1alpha1;remotewallet";
@@ -20,9 +22,24 @@ service RemoteWallet {
         };
     }
 
-    rpc Sign (SignRequest) returns (SignResponse) {
+    // part of the protected keymanager interface, has the responsibility to prevent sig req that could slash
+    rpc SignAttestation (SignAttestationRequest) returns (SignResponse) {
         option (google.api.http) = {
-            get: "/wallet/v1alpha1/keys/sign"
+            get: "/wallet/v1alpha1/keys/sign/attestation"
+        };
+    }
+
+    // part of the protected keymanager interface, has the responsibility to prevent sig req that could slash
+    rpc SignProposal (SignProposalRequest) returns (SignResponse) {
+        option (google.api.http) = {
+            get: "/wallet/v1alpha1/keys/sign/proposal"
+        };
+    }
+
+    // part of the protected keymanager interface, has the responsibility to prevent sig req that could slash
+    rpc SignSlot (SignSlotRequest) returns (SignResponse) {
+        option (google.api.http) = {
+            get: "/wallet/v1alpha1/keys/sign/slot"
         };
     }
 }
@@ -39,10 +56,22 @@ message SignResponse {
     SignResponseStatus status = 2;
 }
 
-message SignRequest {
+message SignAttestationRequest {
     bytes public_key = 1;
-    bytes root = 2;
-    uint64 domain = 3;
+    uint64 domain = 2;
+    ethereum.eth.v1alpha1.AttestationData data = 3;
+}
+
+message SignProposalRequest {
+    bytes public_key = 1;
+    uint64 domain = 2;
+    ethereum.eth.v1alpha1.BeaconBlockHeader data = 3;
+}
+
+message SignSlotRequest {
+    bytes public_key = 1;
+    uint64 domain = 2;
+    bytes slot = 3;
 }
 
 enum SignResponseStatus {

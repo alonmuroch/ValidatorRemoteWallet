@@ -18,6 +18,13 @@ http_archive(
     sha256 = "3c681998538231a2d24d0c07ed5a7658cb72bfb5fd4bf9911157c0e9ac6a2687",
 )
 
+http_archive(
+    name = "io_kubernetes_build",
+    sha256 = "b84fbd1173acee9d02a7d3698ad269fdf4f7aa081e9cecd40e012ad0ad8cfa2a",
+    strip_prefix = "repo-infra-6537f2101fb432b679f3d103ee729dd8ac5d30a0",
+    url = "https://github.com/kubernetes/repo-infra/archive/6537f2101fb432b679f3d103ee729dd8ac5d30a0.tar.gz",
+)
+
 load("@io_bazel_rules_go//go:deps.bzl", "go_rules_dependencies", "go_register_toolchains")
 
 go_rules_dependencies()
@@ -170,4 +177,52 @@ go_repository(
     name = "com_github_wealdtech_go_eth2_util",
     commit = "326ebb1755651131bb8f4506ea9a23be6d9ad1dd",
     importpath = "github.com/wealdtech/go-eth2-util",
+)
+
+go_repository(
+    name = "com_github_prysmaticlabs_ethereumapis",
+    commit = "fca4d6f69bedb8615c2fc916d1a68f2692285caa",
+    importpath = "github.com/prysmaticlabs/ethereumapis",
+)
+
+go_repository(
+    name = "com_github_prysmaticlabs_go_ssz",
+    commit = "e24db4d9e9637cf88ee9e4a779e339a1686a84ee",
+    importpath = "github.com/prysmaticlabs/go-ssz",
+)
+
+go_repository(
+    name = "com_github_prysmaticlabs_go_bitfield",
+    commit = "dbb55b15e92f897ee230360c8d9695e2f224b117",
+    importpath = "github.com/prysmaticlabs/go-bitfield",
+)
+
+go_repository(
+    name = "com_github_minio_sha256_simd",
+    commit = "6de4475307716de15b286880ff321c9547086fdd",  # v0.1.1
+    importpath = "github.com/minio/sha256-simd",
+)
+
+go_repository(
+    name = "com_github_protolambda_zssz",
+    commit = "632f11e5e281660402bd0ac58f76090f3503def0",
+    importpath = "github.com/protolambda/zssz",
+)
+
+go_repository(
+    name = "com_github_minio_highwayhash",
+    importpath = "github.com/minio/highwayhash",
+    commit = "02ca4b43caa3297fbb615700d8800acc7933be98"
+)
+
+go_repository(
+    name = "com_github_dgraph_io_ristretto",
+    commit = "99d1bbbf28e64530eb246be0568fc7709a35ebdd",  # v0.0.1
+    importpath = "github.com/dgraph-io/ristretto",
+)
+
+go_repository(
+    name = "com_github_cespare_xxhash",
+    commit = "d7df74196a9e781ede915320c11c378c1b2f3a1f",
+    importpath = "github.com/cespare/xxhash",
 )
