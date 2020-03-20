@@ -8,9 +8,8 @@ The idea is to be able to connect to a validator infrastructure (might not be co
 a.k.a hold and manage your own keys 
 
 ----
-## Building
-1. [protobuf](https://github.com/golang/protobuf) on commit 6c65a5562fc06764971b7c5d05c76c75e84bdbf7. This is because prysm uses an older version of grpc which is not supported by newer protoc gen versions
-2. build the Proto files to a go target
-3. run bazel run //:gazelle to rebuild the Build files
 
-----
+TODO
+1) add slashing protection to server example.
+2) wallet key management (create) and eth 1.0 deposit transaction data. Could use [ethdo](https://github.com/wealdtech/ethdo)
+3) add admin RPC methods for managing the wallet (adding new keys, locking and so on)

@@ -2,7 +2,6 @@ package main
 
 import (
 	"context"
-	"encoding/hex"
 	"fmt"
 	pb "github.com/alonmuroch/validatorremotewallet/wallet/v1alpha1"
 	"github.com/prysmaticlabs/go-ssz"
@@ -13,9 +12,6 @@ import (
 	"net"
 )
 
-// TODO
-// 1. create external methods for accessing wallet data, create/ remove accounts and so on
-// 2. create external methods for stats?
 type Server struct {
 	pb.RemoteWalletServer
 	conn         	*grpc.Server
